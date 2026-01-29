@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memories 💖</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #3a1c71, #5f2c82, #2c5364);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bg-emoji {
+            position: absolute;
+            opacity: .9;
+            z-index: 0;
+            filter: drop-shadow(0 0 16px rgba(255, 255, 255, .6));
+            animation: floatUp linear infinite;
+            will-change: transform, opacity;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(110vh) scale(.8)
+            }
+
+            to {
+                transform: translateY(-130vh) scale(1.3);
+                opacity: 0
+            }
+        }
+
+        .decor {
+            position: fixed;
+            font-size: 90px;
+            opacity: .45;
+            z-index: 1;
+        }
+
+        .tl {
+            top: 10px;
+            left: 10px
+        }
+
+        .tr {
+            top: 10px;
+            right: 10px
+        }
+
+        .bl {
+            bottom: 10px;
+            left: 10px
+        }
+
+        .br {
+            bottom: 10px;
+            right: 10px
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1100px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 16px;
+        }
+
+        .heading {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .quote {
+            margin-top: 14px;
+            font-size: 1.3rem;
+            font-style: italic;
+            max-width: 900px;
+        }
+
+        .stage img {
+            max-width: 90vw;
+            max-height: 60vh;
+            border-radius: 22px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, .5);
+            animation: grow 10s linear forwards;
+            will-change: transform;
+        }
+
+        @keyframes grow {
+            from {
+                transform: scale(.85)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .final-screen {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, #2b1055, #7597de);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .grid {
+            width: 100%;
+            height: 70%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            padding: 20px;
+        }
+
+        @media(max-width:768px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        .grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, .08);
+        }
+
+        .final-text {
+            font-size: 2.4rem;
+            font-weight: 700;
+            text-decoration: underline;
+            margin: 10px 0;
+        }
+
+        .next-btn {
+            margin: 12px 0 20px;
+            padding: 18px 46px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(255, 80, 120, .8);
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="decor tl">🎈</div>
+    <div class="decor tr">🎀</div>
+    <div class="decor bl">💝</div>
+    <div class="decor br">💞</div>
+
+    <div class="container" id="container">
+        <div class="heading" id="heading"></div>
+        <div class="stage"><img id="photo"></div>
+        <div class="quote" id="quote"></div>
+    </div>
+
+    <audio id="music" loop playsinline preload="auto">
+        <source src="music/photos.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const emojis = ["❤️", "💖", "💘", "💝", "💕", "💗", "💓", "💑", "🎈", "✨"];
+        let emojiInterval;
+        let emojiCount = 0;
+        const MAX_EMOJIS = 18;
+        let active = true;
+
+        function startEmojis() {
+            emojiInterval = setInterval(() => {
+                if (!active || emojiCount >= MAX_EMOJIS) return;
+
+                emojiCount++;
+                const e = document.createElement("div");
+                e.className = "bg-emoji";
+                e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                e.style.left = Math.random() * 100 + "vw";
+                e.style.fontSize = (50 + Math.random() * 60) + "px";
+                e.style.animationDuration = (7 + Math.random() * 6) + "s";
+                document.body.appendChild(e);
+
+                setTimeout(() => {
+                    e.remove();
+                    emojiCount--;
+                }, 14000);
+            }, 450);
+        }
+
+        const headings = [
+            "Moments That Feel Effortless", "A Presence That Feels Calm", "When Smiles Change Everything",
+            "Happiness, Just As You Are", "Warmth In Every Frame", "A Peace That Needs No Words",
+            "The Quiet Magic You Carry", "Grace In The Way You Are", "Turning Moments Into Memories",
+            "Beauty In Simplicity", "A Glow Beyond Words", "Every Version Is Special",
+            "This Is What Love Looks Like", "Strength, Focus, And A Future", "Always, In Every Way"
+        ];
+
+        const quotes = [
+            "You have a way of making every moment feel beautiful.",
+            "There is comfort in the way you simply exist.",
+            "Your smile changes the mood of the entire world of me.",
+            "You look like happiness found its perfect form.",
+            "Every picture of you feels effortlessly warm.",
+            "There’s peace in just looking at you.",
+            "You have this calm magic that never fades.",
+            "The way you carry yourself is quietly breathtaking.",
+            "You turn ordinary moments into memories.",
+            "You make simplicity look incredibly beautiful.",
+            "You glow in ways that words can’t explain.",
+            "Every version of you feels special to me.",
+            "This is exactly what love looks like.",
+            "In this quiet strength, calm focus, and sincere dedication — I see a future that makes me proud to love you.",
+            "Nature looks better when you are in it ✨"
+        ];
+
+        let i = 0;
+        const TOTAL = 15;
+        const img = document.getElementById("photo");
+        const head = document.getElementById("heading");
+        const quoteEl = document.getElementById("quote");
+        const music = document.getElementById("music");
+        const container = document.getElementById("container");
+
+        function show() {
+            if (i >= TOTAL) { finalGrid(); return; }
+            img.style.animation = "none";
+            void img.offsetWidth;
+            img.src = `images/photo${i + 1}.jpg`;
+            img.style.animation = "grow 10s linear forwards";
+            head.innerText = headings[i];
+            quoteEl.innerText = quotes[i];
+            i++;
+            setTimeout(show, 10000);
+        }
+
+        function finalGrid() {
+            clearInterval(emojiInterval);
+            container.innerHTML = `
+            <div class="final-screen">
+                <div class="grid">
+                    ${Array.from({ length: 15 }, (_, i) => `<img src="images/photo${i + 1}.jpg">`).join("")}
+                </div>
+                <div class="final-text">Lots of love, always — from Kuttu ❤️</div>
+                <button class="next-btn" id="nextBtn" onclick="goNext()">Next 💕</button>
+            </div>`;
+            setTimeout(() => {
+                music.pause();
+                music.currentTime = 0;
+                document.getElementById("nextBtn").style.display = "block";
+            }, 20000);
+        }
+
+        function goNext() {
+            window.location.href = "letters.html";
+        }
+
+        window.addEventListener("load", () => {
+            if (sessionStorage.getItem("playPhotosMusic") === "yes") {
+                setTimeout(() => {
+                    music.volume = .6;
+                    music.play().catch(() => { });
+                    sessionStorage.removeItem("playPhotosMusic");
+                }, 300);
+            }
+            startEmojis();
+            show();
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            active = !document.hidden;
+            if (!active) music.pause();
+            else music.play().catch(() => { });
+        });
+    </script>
+
+</body>
+
+</html>

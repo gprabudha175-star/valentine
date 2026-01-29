@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Letters 💌</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(180deg, #1a1a2e, #3a1c71, #5f2c82);
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, #2b1055, #7597de);
+            z-index: 5;
+            color: #fff;
+            text-align: center;
+        }
+
+        .progress {
+            width: 70%;
+            height: 14px;
+            background: rgba(255, 255, 255, .3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            will-change: width;
+        }
+
+        .loading-gif {
+            width: 180px;
+            margin-top: 20px;
+        }
+
+        #letterPage {
+            display: none;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .letter-box {
+            max-width: 900px;
+            margin: auto;
+            background: linear-gradient(135deg, #f7e7c6, #f1d8a5);
+            color: #3b2a1a;
+            border-radius: 28px;
+            padding: 32px 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
+            max-height: 80vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            animation: fadeIn 1.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .letter-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.15rem, 2.6vw, 1.55rem);
+            line-height: 1.95;
+            white-space: pre-line;
+        }
+
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #7a1e3a;
+        }
+
+        .letter-gif {
+            width: 180px;
+            max-width: 70%;
+            margin: 24px auto 0;
+            display: block;
+            border-radius: 18px;
+        }
+
+        .next-btn {
+            position: fixed;
+            right: 18px;
+            bottom: 28px;
+            padding: 16px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: #fff;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 0 30px rgba(255, 80, 120, .7);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loadingScreen">
+        <h2>Our beautiful memories are still loading… 💖</h2>
+        <div class="progress">
+            <div class="bar" id="bar"></div>
+        </div>
+        <img src="images/loading-love.gif" class="loading-gif">
+    </div>
+
+    <div id="letterPage">
+        <div class="letter-box">
+            <div class="letter-text" id="letterText"></div>
+            <img id="letterGif" class="letter-gif">
+            <div class="signature" id="signature"></div>
+        </div>
+        <button class="next-btn" id="nextBtn" onclick="nextLetter()">Next Letter ➡</button>
+    </div>
+
+    <audio id="music" loop preload="auto">
+        <source src="music/letters.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            let progress = 0;
+            const bar = document.getElementById("bar");
+            const music = document.getElementById("music");
+            const loadingScreen = document.getElementById("loadingScreen");
+            const letterPage = document.getElementById("letterPage");
+            const nextBtn = document.getElementById("nextBtn");
+
+            const loadInterval = setInterval(() => {
+                progress++;
+                bar.style.width = progress + "%";
+                if (progress >= 100) {
+                    clearInterval(loadInterval);
+                    loadingScreen.style.display = "none";
+                    letterPage.style.display = "block";
+                    music.volume = 0.6;
+                    music.play().catch(() => { });
+                    showLetter();
+                }
+            }, 100);
+
+            const letters = [
+                `My Pillu… 💖
+
+We fight sometimes…
+late nights 🌙, small misunderstandings,
+little silences between messages that feel heavier than words 💭.
+
+But no matter what happens,
+one thing never changes 🤍.
+
+We still say —
+“Good night 🌙”
+“Take care 🤍”
+“Sweet dreams 😴✨”
+
+आणि हेच मला सगळं सांगून जातं…
+that even in chaos, even in confusion,
+you always choose care 💗.
+
+You are busy in college —
+running between lectures 📚, events 🎉, responsibilities,
+handling so much more than people realise.
+
+And still…
+whenever you get even one small moment,
+you text me 💬,
+you call me 📞,
+you check on me 🤍.
+
+That effort… 💞
+that quiet consistency…
+it means more to me than long conversations or big promises 🌸.
+
+And this…
+this is what your love looks like to me,
+even without you ever saying it 💞.
+
+Most of the time,
+the mistakes are mine.
+
+I know that.
+I accept that.
+
+You handle things with so much maturity…
+like a wise person 🕊️,
+while many times I react emotionally.
+
+Sometimes I behave wrongly.
+Sometimes I think only from my side.
+
+कधी कधी मी थोडा selfish होतो…
+कधी possessive…
+कधी jealous…
+कधी insecure 😔.
+
+When I get hurt or angry,
+I try to avoid you,
+I keep distance from you 💔.
+
+But inside my mind,
+another fear keeps growing…
+
+What if you think
+I’m not interested in you anymore?
+What if you feel
+I was just doing time pass with you?
+
+But please believe me… 🙏
+none of that is true.
+
+I am always interested in you ❤️.
+I have never done time pass with you.
+This is not attraction.
+This is my love for you 💖.
+
+Whatever I do,
+I do it out of care,
+out of concern,
+out of love for you 🌷.
+
+If ever I spoke to you rudely…
+if my words hurt you in anger or rage…
+please forgive me 🫶.
+
+I am still learning.
+Still growing.
+Still trying to become better — for you.
+
+And one thing I am sure about…
+
+Whenever life asks me to choose,
+I will always choose you 🤍.
+
+I will always be there with you.
+No matter what.
+No matter when.
+
+I promise you…
+I love you.
+I love you so much ❤️✨.`,
+
+                `Every morning starts with “Good morning ☀️”,
+and somehow my day already feels lighter.
+
+You call me Adi…
+and that one word carries warmth, comfort,
+and a sense of closeness I can’t explain 🫶.
+
+We are not in a relationship —
+and still, the bond we share feels deeper than many labels.
+
+You trust me.
+And that trust… 🤍
+it’s something I value more than anything.
+
+तू माझ्यावर इतका शांतपणे विश्वास ठेवतेस,
+इतका सहज…
+without doubts, without questions.
+
+I know I matter to you.
+I know my presence means something to you.
+And that feeling…
+it makes me feel important in a way words can’t describe.
+
+You give me priority —
+not because you have to,
+but because you choose to.
+
+When I’m low, you notice.
+When I overthink, you understand.
+When I speak badly about myself,
+you stop me immediately and say —
+
+“काही पण उगाच फालतूचं बोलू नकोस नाहीतर मला येऊन तुला द्यावं लागेल 😌💢”
+
+And suddenly…
+I feel cared for.
+I feel protected 🤍.
+
+You listen to me patiently.
+You remember small things about me.
+You make time for me, even when you barely have time for yourself 🌸.
+
+I know you are sensitive.
+I know you feel deeply.
+And I promise…
+I will always handle your heart with care 🤍.
+
+In your life, I am your closest,
+your best male friend.
+And I respect that space completely.
+
+But in my heart…
+you are someone I’ll always choose.
+Someone I’ll always stand by.
+
+No matter what changes around us,
+this connection —
+this understanding —
+will always stay special to me 💞.`,
+
+                `Our video calls… 📱💞
+
+Sometimes we talk.
+Sometimes we don’t.
+
+Sometimes we just look at each other…
+and smile 😊.
+
+No words.
+No explanations.
+Just you and me,
+existing in the same moment 🤍.
+
+We don’t need to fill the silence.
+Because that silence feels safe.
+It feels warm.
+It feels like home 🏡✨.
+
+Your cute reactions…
+the way your expressions change,
+the sparkle in your eyes when you smile 💫—
+those little moments stay with me for a long time.
+
+You don’t even realise it,
+but your smile calms me.
+Your presence makes things lighter 🌸.
+
+कधी कधी आपण काहीच बोलत नाही,
+तरी सगळं बोलून जातं…
+that kind of comfort is rare.
+
+You listen more than you speak.
+You feel deeply, even quietly.
+And that softness in you
+is one of the things I admire the most 🤍.
+
+In those video calls,
+when the world feels too loud,
+you become my peace.
+
+No drama.
+No pretence.
+Just two hearts understanding each other 💗.
+
+And honestly…
+those silent smiles mean more to me
+than a thousand words ever could ✨.`,
+
+                `I don’t know what the future holds.
+I don’t know what name time will give to us.
+
+But I know one thing for sure…
+
+You are my comfort 🤍.
+You are my habit.
+You are the calm I look for after a long day 🌙.
+
+In my heart,
+you are not just a crush.
+You are not just someone special.
+
+You are someone I respect deeply.
+Someone I trust completely.
+Someone I care about with all honesty 💖.
+
+तू माझ्यासाठी फक्त एक व्यक्ती नाहीस…
+तू माझ्या आयुष्यातला एक खूप महत्त्वाचा भाग आहेस.
+
+Today, you see me as your closest,
+your best male friend —
+and I respect that, truly.
+
+I never want to rush you.
+I never want to pressure you.
+All I want is to be there for you —
+with patience, understanding, and care 🤍.
+
+If someday life asks me to choose,
+there will be no confusion in my heart.
+
+I will choose you.
+Every time.
+Without hesitation.
+
+I will stand with you.
+I will support you.
+I will protect your trust 🌸.
+
+No matter where life takes us,
+know this…
+
+You are deeply valued.
+You are genuinely cared for.
+And you will never be alone 💞.
+
+—
+Always yours,
+with all my heart — Prabudha ❤️`
+            ];
+
+            const gifs = [
+                "images/letter1.gif",
+                "images/letter2.gif",
+                "images/letter3.gif",
+                "images/letter4.gif"
+            ];
+
+            let index = 0;
+            let locked = false;
+
+            function showLetter() {
+                letterText.innerText = letters[index];
+                letterGif.src = gifs[index];
+                signature.innerText = index === 3 ? "Always yours, with all my heart — Prabudha ❤️" : "";
+                nextBtn.style.display = "block";
+                locked = false;
+            }
+
+            window.nextLetter = function () {
+                if (locked) return;
+                locked = true;
+                index++;
+                if (index < letters.length) {
+                    showLetter();
+                } else {
+                    nextBtn.innerText = "Next Page 💕";
+                    nextBtn.onclick = () => window.location.href = "valentine-intro.html";
+                }
+            };
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) music.pause();
+                else music.play().catch(() => { });
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

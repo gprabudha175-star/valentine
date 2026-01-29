@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💖</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #3a0a3f, #120014, #000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 40px;
+            animation: floatUp linear infinite;
+            opacity: .9;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-120vh);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            width: 95%;
+            max-width: 850px;
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(18px);
+            border-radius: 30px;
+            padding: 40px 24px;
+            text-align: center;
+            box-shadow: 0 0 80px rgba(255, 0, 120, .4);
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 1.3rem;
+            opacity: .95;
+        }
+
+        button {
+            margin-top: 28px;
+            padding: 18px 46px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 80, 120, .8);
+        }
+
+        /* ♿ Respect reduced motion if device requests it */
+        @media (prefers-reduced-motion: reduce) {
+            .heart {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+        const hearts = ["❤️", "💖", "💕", "💘", "💝"];
+        let heartInterval;
+
+        function startHearts() {
+            heartInterval = setInterval(() => {
+                const h = document.createElement("div");
+                h.className = "heart";
+                h.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                h.style.left = Math.random() * 100 + "vw";
+                h.style.animationDuration = (6 + Math.random() * 4) + "s";
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 10000);
+            }, 550);
+        }
+
+        function stopHearts() {
+            clearInterval(heartInterval);
+        }
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) stopHearts();
+            else startHearts();
+        });
+
+        startHearts();
+    </script>
+
+    <div class="card">
+        <h1>Before I Ask You Something… 💌</h1>
+        <p>
+            I just want to know what you truly feel.<br>
+            Take your time. Answer honestly 🤍
+        </p>
+
+        <button onclick="openForm()">Answer My Questions 💖</button>
+    </div>
+
+    <script>
+        function openForm() {
+            window.location.href =
+                "https://docs.google.com/forms/d/e/1FAIpQLSfst47_PP3WzoE1C8915-RMZ4nhTPQQsm6XdmDOYmsx8YYveg/viewform";
+        }
+    </script>
+
+</body>
+
+</html>

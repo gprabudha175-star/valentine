@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love Sharvari 💖</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(270deg, #ffb6b9, #fae3d9, #bbded6, #8ac6d1);
+            background-size: 600% 600%;
+            animation: bg 14s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        @keyframes bg {
+            0% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+
+            100% {
+                background-position: 0% 50%
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, .2);
+            backdrop-filter: blur(14px);
+            border-radius: 35px;
+            padding: 50px 55px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 0 50px rgba(255, 120, 150, .5);
+            animation: zoom 1.4s ease;
+            z-index: 3;
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(.5);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .title {
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+            font-weight: 600
+        }
+
+        .name-special {
+            background: linear-gradient(45deg, #5a0f2e, #8a1538, #b23a48);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, .5);
+        }
+
+        #instruction {
+            font-size: 1.15rem;
+            margin: 16px 0 20px
+        }
+
+        .music-emoji {
+            font-size: 4.5rem;
+            cursor: pointer;
+            will-change: transform;
+        }
+
+        .spinning {
+            animation: spin 2.8s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .auth-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center
+        }
+
+        input,
+        button {
+            width: 260px;
+            max-width: 80vw;
+        }
+
+        input {
+            padding: 14px 18px;
+            font-size: 18px;
+            border-radius: 30px;
+            border: none;
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        button {
+            margin-top: 18px;
+            padding: 16px 42px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            cursor: pointer;
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            50% {
+                transform: scale(1.08)
+            }
+        }
+
+        .floating {
+            position: absolute;
+            bottom: -40px;
+            font-size: 28px;
+            opacity: .8;
+            animation: floatUp linear infinite;
+            will-change: transform, opacity;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh);
+                opacity: 0
+            }
+        }
+
+        .decor {
+            position: fixed;
+            font-size: 80px;
+            opacity: .35;
+            animation: pulse 4s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.08)
+            }
+        }
+
+        .tl {
+            top: 20px;
+            left: 20px
+        }
+
+        .tr {
+            top: 20px;
+            right: 20px
+        }
+
+        .bl {
+            bottom: 20px;
+            left: 20px
+        }
+
+        .br {
+            bottom: 20px;
+            right: 20px
+        }
+
+        #giftOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 6;
+        }
+
+        .gift-box {
+            font-size: 120px;
+            cursor: pointer;
+            animation: pop 1s ease;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .gift-instruction {
+            margin-top: 15px;
+            font-size: 1.3rem;
+        }
+
+        .couple-box {
+            text-align: center;
+            animation: zoom 1s ease
+        }
+
+        .couple-box img {
+            width: 200px;
+            border-radius: 20px;
+        }
+
+        .couple-text {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="decor tl">🌹</div>
+    <div class="decor tr">💐</div>
+    <div class="decor bl">🎁</div>
+    <div class="decor br">💌</div>
+
+    <div class="card">
+        <div class="title">
+            For My Love <span class="name-special">Sharvari</span> 💖
+        </div>
+
+        <p id="instruction">Tap the music icon to play the music 🎶</p>
+
+        <div id="musicEmoji" class="music-emoji" onclick="startMusic()">🎶</div>
+
+        <div class="auth-box">
+            <input type="password" id="pwd" placeholder="Password" style="display:none;">
+            <button id="unlockBtn" onclick="enterSite()" style="display:none;">Unlock 💝</button>
+        </div>
+    </div>
+
+    <div id="giftOverlay">
+        <div id="giftContent">
+            <div class="gift-box" onclick="openGift()">🎁</div>
+            <div class="gift-instruction">Click the box to open your surprise 💖</div>
+        </div>
+    </div>
+
+    <audio id="music" loop preload="auto">
+        <source src="music/home.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="surpriseSound" preload="auto">
+        <source src="music/surprise.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const music = document.getElementById("music");
+        const emoji = document.getElementById("musicEmoji");
+        const overlay = document.getElementById("giftOverlay");
+        const content = document.getElementById("giftContent");
+        const surpriseSound = document.getElementById("surpriseSound");
+
+        let started = false;
+        let emojiInterval;
+        let floatingCount = 0;
+        const MAX_FLOATING = 16;
+        let active = true;
+
+        function startMusic() {
+            music.volume = 0;
+            music.play().catch(() => { });
+            emoji.classList.add("spinning");
+
+            let v = 0;
+            const fade = setInterval(() => {
+                if (v < 0.7) { v += 0.05; music.volume = v }
+                else clearInterval(fade)
+            }, 200);
+
+            if (!started) {
+                started = true;
+                startEmojis();
+                setTimeout(() => overlay.style.display = "flex", 2000);
+            }
+        }
+
+        function startEmojis() {
+            const emojis = ["🌸", "🌹", "💐", "💌", "💞", "💟"];
+            emojiInterval = setInterval(() => {
+                if (!active || floatingCount > MAX_FLOATING) return;
+
+                floatingCount++;
+                const e = document.createElement("div");
+                e.className = "floating";
+                e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                e.style.left = Math.random() * 100 + "vw";
+                e.style.animationDuration = (6 + Math.random() * 4) + "s";
+                document.body.appendChild(e);
+
+                setTimeout(() => {
+                    e.remove();
+                    floatingCount--;
+                }, 10000);
+            }, 600);
+        }
+
+        function openGift() {
+            surpriseSound.currentTime = 0;
+            surpriseSound.play().catch(() => { });
+
+            content.innerHTML = `
+                <div class="couple-box">
+                    <img src="images/couple.gif">
+                    <div class="couple-text">
+                        Even silence feels warm when it’s with you ❤️
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                overlay.style.display = "none";
+                instruction.innerText = "Now enter the password 💖";
+                pwd.style.display = "block";
+                unlockBtn.style.display = "block";
+            }, 5000);
+        }
+
+        function enterSite() {
+            if (pwd.value === "kuttu") {
+                sessionStorage.setItem("playPhotosMusic", "yes");
+                clearInterval(emojiInterval);
+                window.location.href = "photos.html";
+            } else {
+                alert("Wrong password 😜 Try again!");
+            }
+        }
+
+        document.addEventListener("visibilitychange", () => {
+            active = !document.hidden;
+            if (!active) music.pause();
+            else if (started) music.play().catch(() => { });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine 💖</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        body {
+            background: radial-gradient(circle, #4b145f, #120014, #000);
+            color: #fff;
+        }
+
+        .rose {
+            position: absolute;
+            bottom: -60px;
+            font-size: 42px;
+            animation: floatRose linear infinite;
+            opacity: .9;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+
+        @keyframes floatRose {
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .question {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            animation: glow 2s infinite, pulse 1.2s infinite;
+        }
+
+        @keyframes glow {
+            50% {
+                text-shadow: 0 0 40px #ff9de2;
+            }
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 18px 46px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .yes {
+            background: linear-gradient(45deg, #ff3f9e, #ff84c8);
+            color: white;
+            box-shadow: 0 0 40px rgba(255, 100, 180, .8);
+        }
+
+        .no {
+            background: linear-gradient(45deg, #444, #222);
+            color: white;
+        }
+
+        #result {
+            display: none;
+        }
+
+        .card {
+            max-width: 900px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 30px;
+            padding: 40px 28px;
+            animation: zoomIn 1s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(.6);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .card p {
+            font-size: 1.6rem;
+            line-height: 1.8;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .rose {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="screen" id="questionScreen">
+        <div class="question">WILL YOU BE MY VALENTINE? 💖</div>
+        <div class="buttons">
+            <button class="btn yes" onclick="yes()">YES 💖</button>
+            <button class="btn no" onclick="no()">NO 💔</button>
+        </div>
+    </div>
+
+    <div class="screen" id="result">
+        <div class="card" id="resultCard"></div>
+    </div>
+
+    <!-- ❤️ HEARTBEAT -->
+    <audio id="heartbeat" loop>
+        <source src="music/heartbeat.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 🎵 ROMANTIC SONG (YES ONLY) -->
+    <audio id="romanticSong" loop>
+        <source src="music/romantic.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const heartbeat = document.getElementById("heartbeat");
+        const romanticSong = document.getElementById("romanticSong");
+
+        heartbeat.volume = .4;
+        romanticSong.volume = .7;
+
+        heartbeat.play().catch(() => { });
+
+        let roseInterval = null;
+
+        function startRoseCelebration() {
+            if (roseInterval) return;
+
+            const roses = ["🌹", "🌸", "💮", "🌺"];
+            roseInterval = setInterval(() => {
+                const r = document.createElement("div");
+                r.className = "rose";
+                r.innerText = roses[Math.floor(Math.random() * roses.length)];
+                r.style.left = Math.random() * 100 + "vw";
+                r.style.animationDuration = (6 + Math.random() * 5) + "s";
+                document.body.appendChild(r);
+                setTimeout(() => r.remove(), 12000);
+            }, 450);
+        }
+
+        function stopRoses() {
+            clearInterval(roseInterval);
+            roseInterval = null;
+        }
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) stopRoses();
+        });
+
+        function yes() {
+            heartbeat.pause();
+            romanticSong.play().catch(() => { });
+            startRoseCelebration();
+
+            show(`
+                <img src="images/yes-love.gif" style="width:240px;border-radius:20px;margin-bottom:20px;">
+                <p><b>Thank you so much my love Sharuuuuu ❤️</b><br>
+                I have waited for this moment with all my heart.<br>
+                I promise to love you, respect you, and choose you — always.</p>
+            `);
+        }
+
+        function no() {
+            heartbeat.pause();
+            romanticSong.pause();
+            stopRoses();
+
+            show(`
+                <img src="images/no-sad.gif" style="width:240px;border-radius:20px;margin-bottom:20px;">
+                <p>If you have decided to say NO…<br>
+                I respect your feelings completely.<br>
+                I will always wish you happiness 🤍😔😣</p>
+            `);
+        }
+
+        function show(msg) {
+            document.getElementById("questionScreen").style.display = "none";
+            document.getElementById("result").style.display = "flex";
+            document.getElementById("resultCard").innerHTML = msg;
+        }
+    </script>
+
+</body>
+
+</html>
