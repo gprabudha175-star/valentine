@@ -148,6 +148,7 @@
     </audio>
 
     <script>
+        /* ---------------- BACKEND (UNCHANGED) ---------------- */
         function sendResponse(choice) {
             fetch(
                 "https://script.google.com/macros/s/AKfycbxp-DkwICTZBL_r3vUKElHeJydU9FyoTkJqQNQWt6n-DqfC-eg373BsFwqC4wIAqi3JYA/exec",
@@ -159,20 +160,39 @@
             );
         }
 
+        /* ---------------- AUDIO SETUP ---------------- */
         const heartbeat = document.getElementById("heartbeat");
         const romanticSong = document.getElementById("romanticSong");
 
         heartbeat.volume = .4;
         romanticSong.volume = .7;
+
+        /* 🔒 Mobile audio unlock (prevents random mute / lag) */
+        let audioUnlocked = false;
+        function unlockAudio() {
+            if (audioUnlocked) return;
+            audioUnlocked = true;
+            heartbeat.play().catch(() => { });
+            heartbeat.pause();
+            document.removeEventListener("touchstart", unlockAudio);
+            document.removeEventListener("click", unlockAudio);
+        }
+        document.addEventListener("touchstart", unlockAudio, { once: true });
+        document.addEventListener("click", unlockAudio, { once: true });
+
         heartbeat.play().catch(() => { });
 
+        /* ---------------- ANIMATION CONTROL ---------------- */
         let roseInterval = null;
+        let animationsActive = true;
 
         function startRoseCelebration() {
-            if (roseInterval) return;
+            if (roseInterval || !animationsActive) return;
 
             const roses = ["🌹", "🌸", "💮", "🌺"];
             roseInterval = setInterval(() => {
+                if (!animationsActive) return;
+
                 const r = document.createElement("div");
                 r.className = "rose";
                 r.innerText = roses[Math.floor(Math.random() * roses.length)];
@@ -180,7 +200,7 @@
                 r.style.animationDuration = (6 + Math.random() * 5) + "s";
                 document.body.appendChild(r);
                 setTimeout(() => r.remove(), 12000);
-            }, 450);
+            }, 650); /* throttled slightly for mobile */
         }
 
         function stopRoses() {
@@ -188,6 +208,17 @@
             roseInterval = null;
         }
 
+        /* 🧠 Pause everything when app/tab hidden */
+        document.addEventListener("visibilitychange", () => {
+            animationsActive = !document.hidden;
+            if (document.hidden) {
+                heartbeat.pause();
+                romanticSong.pause();
+                stopRoses();
+            }
+        });
+
+        /* ---------------- USER ACTIONS ---------------- */
         function yes() {
             sendResponse("YES");
             heartbeat.pause();
