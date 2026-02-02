@@ -104,6 +104,7 @@
             box-shadow: 0 30px 60px rgba(0, 0, 0, .5);
             animation: grow 10s linear forwards;
             will-change: transform;
+            transform: translateZ(0);
         }
 
         @keyframes grow {
@@ -180,7 +181,7 @@
 
     <div class="container" id="container">
         <div class="heading" id="heading"></div>
-        <div class="stage"><img id="photo"></div>
+        <div class="stage"><img id="photo" decoding="async"></div>
         <div class="quote" id="quote"></div>
     </div>
 
@@ -198,7 +199,6 @@
         function startEmojis() {
             emojiInterval = setInterval(() => {
                 if (!active || emojiCount >= MAX_EMOJIS) return;
-
                 emojiCount++;
                 const e = document.createElement("div");
                 e.className = "bg-emoji";
@@ -207,7 +207,6 @@
                 e.style.fontSize = (50 + Math.random() * 60) + "px";
                 e.style.animationDuration = (7 + Math.random() * 6) + "s";
                 document.body.appendChild(e);
-
                 setTimeout(() => {
                     e.remove();
                     emojiCount--;
@@ -249,11 +248,19 @@
         const music = document.getElementById("music");
         const container = document.getElementById("container");
 
+        // 🔥 PRELOAD IMAGES (KEY FIX)
+        const preload = [];
+        for (let n = 1; n <= TOTAL; n++) {
+            const im = new Image();
+            im.src = `images/photo${n}.jpg`;
+            preload.push(im);
+        }
+
         function show() {
             if (i >= TOTAL) { finalGrid(); return; }
             img.style.animation = "none";
             void img.offsetWidth;
-            img.src = `images/photo${i + 1}.jpg`;
+            img.src = preload[i].src;
             img.style.animation = "grow 10s linear forwards";
             head.innerText = headings[i];
             quoteEl.innerText = quotes[i];
@@ -266,7 +273,7 @@
             container.innerHTML = `
             <div class="final-screen">
                 <div class="grid">
-                    ${Array.from({ length: 15 }, (_, i) => `<img src="images/photo${i + 1}.jpg">`).join("")}
+                    ${Array.from({ length: 15 }, (_, i) => `<img src="images/photo${i + 1}.jpg" loading="lazy">`).join("")}
                 </div>
                 <div class="final-text">Lots of love, always — from Kuttu ❤️</div>
                 <button class="next-btn" id="nextBtn" onclick="goNext()">Next 💕</button>
