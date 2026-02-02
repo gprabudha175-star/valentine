@@ -149,73 +149,78 @@
 
     <script>
         function sendResponse(choice) {
-            fetch("https://script.google.com/macros/s/AKfycbxp-DkwICTZBL_r3vUKElHeJydU9FyoTkJqQNQWt6n-DqfC-eg373BsFwqC4wIAqi3JYA/exec", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: "choice=" + encodeURIComponent(choice)
-            });
+            fetch(
+                "https://script.google.com/macros/s/AKfycbxp-DkwICTZBL_r3vUKElHeJydU9FyoTkJqQNQWt6n-DqfC-eg373BsFwqC4wIAqi3JYA/exec",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: "choice=" + encodeURIComponent(choice)
+                }
+            );
         }
-    </script>
 
-    const heartbeat = document.getElementById("heartbeat");
-    const romanticSong = document.getElementById("romanticSong");
+        const heartbeat = document.getElementById("heartbeat");
+        const romanticSong = document.getElementById("romanticSong");
 
-    heartbeat.volume = .4;
-    romanticSong.volume = .7;
-    heartbeat.play().catch(() => { });
+        heartbeat.volume = .4;
+        romanticSong.volume = .7;
+        heartbeat.play().catch(() => { });
 
-    let roseInterval = null;
+        let roseInterval = null;
 
-    function startRoseCelebration() {
-    if (roseInterval) return;
-    const roses = ["🌹", "🌸", "💮", "🌺"];
-    roseInterval = setInterval(() => {
-    const r = document.createElement("div");
-    r.className = "rose";
-    r.innerText = roses[Math.floor(Math.random() * roses.length)];
-    r.style.left = Math.random() * 100 + "vw";
-    r.style.animationDuration = (6 + Math.random() * 5) + "s";
-    document.body.appendChild(r);
-    setTimeout(() => r.remove(), 12000);
-    }, 450);
-    }
+        function startRoseCelebration() {
+            if (roseInterval) return;
 
-    function stopRoses() {
-    clearInterval(roseInterval);
-    roseInterval = null;
-    }
+            const roses = ["🌹", "🌸", "💮", "🌺"];
+            roseInterval = setInterval(() => {
+                const r = document.createElement("div");
+                r.className = "rose";
+                r.innerText = roses[Math.floor(Math.random() * roses.length)];
+                r.style.left = Math.random() * 100 + "vw";
+                r.style.animationDuration = (6 + Math.random() * 5) + "s";
+                document.body.appendChild(r);
+                setTimeout(() => r.remove(), 12000);
+            }, 450);
+        }
 
-    function yes() {
-    sendResponse("YES");
-    heartbeat.pause();
-    romanticSong.play().catch(() => { });
-    startRoseCelebration();
-    show(`
-    <img src="images/yes-love.gif" style="width:240px;border-radius:20px;margin-bottom:20px;">
-    <p><b>Thank you so much my love Sharuuuuu ❤️</b><br>
-        I have waited for this moment with all my heart.<br>
-        I promise to love you, respect you, and choose you — always.</p>
-    `);
-    }
+        function stopRoses() {
+            clearInterval(roseInterval);
+            roseInterval = null;
+        }
 
-    function no() {
-    sendResponse("NO");
-    heartbeat.pause();
-    romanticSong.pause();
-    stopRoses();
-    show(`
-    <img src="images/no-sad.gif" style="width:240px;border-radius:20px;margin-bottom:20px;">
-    <p>If you have decided to say NO…<br>
-        I respect your feelings completely.<br>
-        I will always wish you happiness 🤍😔😣</p>
-    `);
-    }
+        function yes() {
+            sendResponse("YES");
+            heartbeat.pause();
+            romanticSong.play().catch(() => { });
+            startRoseCelebration();
 
-    function show(msg) {
-    document.getElementById("questionScreen").style.display = "none";
-    document.getElementById("result").style.display = "flex";
-    document.getElementById("resultCard").innerHTML = msg;
-    }
+            show(`
+                <img src="images/yes-love.gif" style="width:240px;border-radius:20px;margin-bottom:20px;">
+                <p><b>Thank you so much my love Sharuuuuu ❤️</b><br>
+                I have waited for this moment with all my heart.<br>
+                I promise to love you, respect you, and choose you — always.</p>
+            `);
+        }
+
+        function no() {
+            sendResponse("NO");
+            heartbeat.pause();
+            romanticSong.pause();
+            stopRoses();
+
+            show(`
+                <img src="images/no-sad.gif" style="width:240px;border-radius:20px;margin-bottom:20px;">
+                <p>If you have decided to say NO…<br>
+                I respect your feelings completely.<br>
+                I will always wish you happiness 🤍😔😣</p>
+            `);
+        }
+
+        function show(msg) {
+            document.getElementById("questionScreen").style.display = "none";
+            document.getElementById("result").style.display = "flex";
+            document.getElementById("resultCard").innerHTML = msg;
+        }
     </script>
 
 </body>
